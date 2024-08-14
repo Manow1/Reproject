@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/public/css/home.css">
+    <style>
+        .dashboard-box {
+            background-color: #F7F0D1;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .img {
+            width: 250px;
+            height: auto;
+            display: grid;
+            place-items: center;
+        }
+
+        .flex-item,
+        .grid-item {
+            text-align: right;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 12px 35px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 0 20px;
+        }
+    </style>
+     <script>
+        async function loadHeader() {
+            try {
+                const response = await fetch('/header.html');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const headerHTML = await response.text();
+                document.getElementById('header-placeholder').innerHTML = headerHTML;
+
+                // Add the logout button event listener here after the header is loaded
+                document.getElementById('logoutButton').addEventListener('click', async function () {
+                    try {
+                        const response = await fetch('/auth/logout', { method: 'GET' });
+                        if (response.ok) {
+                            window.location.href = '/login'; // Redirect to the login page upon successful logout
+                        } else {
+                            console.error('Error logging out:', await response.text());
+                        }
+                    } catch (error) {
+                        console.error('Error logging out:', error);
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading header:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadHeader);
+    </script>
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="mx-5 my-3">
+        <h1>Personal Information</h1>
+    </div>
+    <div class="dashboard-box mx-5">
+        <div class="row">
+            <div class="img col-md-6">
+                <img src="/image/profile.webp" alt="Profile Picture" class="img-thumbnail">
+            </div>
+            <div class="col-md-6">
+                <p>6431501xxx : <span class="text-danger">student name</span></p>
+                <hr>
+                <p>Telephone Number <span class="text-danger">xxxx</span></p>
+                <p>MFU Mail <span class="text-danger">xxx</span></p>
+                <p>School <span class="text-danger">xxx</span></p>
+                <p>Major <span class="text-danger">xxx</span></p>
+                <p>Degree <span class="text-danger">xxx</span></p><br>
+                <p>Status check in: <span class="text-danger">---</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="buttons">
+        <a href="/home" class="button btn btn-secondary" id="homeButton">Home</a>
+        <a href="..." class="button btn btn-danger" id="editButton">Edit</a>
+    </div>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Fetch user data and update DOM here if needed
+        });
+
+        document.getElementById('en-link')?.addEventListener('click', function () {
+            document.getElementById('univ-name-en').style.display = 'block';
+            document.getElementById('univ-name-th').style.display = 'none';
+        });
+
+        document.getElementById('th-link')?.addEventListener('click', function () {
+            document.getElementById('univ-name-en').style.display = 'none';
+            document.getElementById('univ-name-th').style.display = 'block';
+        });
+
+        document.getElementById('univ-name-th')?.style.display = 'none';
+    </script> -->
+</body>
+
+</html>

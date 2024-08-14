@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input The Student information</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/public/css/home.css">
+    <style>
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .rounded-input {
+            border: 2px solid #ccc;
+            border-radius: 15px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .rounded-select {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #f0f0f0;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="d-flex align-items-center">
+            <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" class="logo">
+            <div class="university-name ms-3">
+                <h1 id="univ-name-en">MAE FAH LUANG UNIVERSITY</h1>
+                <h2 id="univ-name-th">มหาวิทยาลัยแม่ฟ้าหลวง</h2>
+            </div>
+        </div>
+        <div class="language-switch">
+            <a id="en-link">EN</a> | <a id="th-link">TH</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <form action="submit.php" method="post">
+                <section id="personal-info">
+                    <h2>Personal information</h2>
+                    <label for="name">Student ID:</label>
+                    <input class="rounded-input" type="text" id="studentID" name="StudentID" required>
+
+                    <label for="name">Name:</label>
+                    <input class="rounded-input" type="text" id="name" name="name" required>
+
+                    <label for="surname">Surname:</label>
+                    <input class="rounded-input" type="text" id="surname" name="surname" required>
+
+                    <label for="name">Phone-number:</label>
+                    <input class="rounded-input" type="text" id="phoneNum" name="phoneNum" required>
+
+                    <label for="name">MFU-Email:</label>
+                    <input class="rounded-input" type="text" id="mfu-Email" name="mfu-Email" required>
+
+                    <label for="degree">Degree:</label>
+                    <select class="rounded-select" id="degree" onchange="filterDropdown2()">
+                        <option value="">Select an option</option>
+                        <option value="bachelor">Bachelor’s Degree</option>
+                        <option value="master">Master’s Degree</option>
+                        <option value="doctoral">Doctoral Degree</option>
+                        <option value="certificate">Certificate</option>
+                    </select>
+
+                    <label for="school">School:</label>
+                    <select class="rounded-select" id="school" onchange="filterDropdown3()">
+                        <option value="">Select an option</option>
+                        <!-- Options will be populated dynamically -->
+                    </select>
+
+                    <label for="major">Major:</label>
+                    <select class="rounded-select" id="major">
+                        <option value="">Select an option</option>
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </section>
+
+                <section id="add-pic">
+                    <h2>Add your Picture</h2>
+                </section>
+                <div class="mt-3">
+                    <p>Picture 1</p>
+                    <input type="file" id="fileInput" accept="image/*">
+                    <div class="preview">
+                        <img id="previewImage" src="#" alt="Image Preview" style="display:none;">
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <p>Picture 2</p>
+                    <input type="file" id="fileInput" accept="image/*">
+                    <div class="preview">
+                        <img id="previewImage" src="#" alt="Image Preview" style="display:none;">
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <p>Picture 3</p>
+                    <input type="file" id="fileInput" accept="image/*">
+                    <div class="preview">
+                        <img id="previewImage" src="#" alt="Image Preview" style="display:none;">
+                    </div>
+                </div>
+
+        </div>
+
+        <script>
+            const fileInput = document.getElementById('fileInput');
+            const previewImage = document.getElementById('previewImage');
+
+            fileInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    previewImage.style.display = 'none';
+                    previewImage.src = '#';
+                }
+            });
+
+            const dropdown2Data = {
+                bachelor: ["School of Agro-Industry", "School of Cosmetic Science", "School of Dentistry", "School of Health Science", "School of Information Technology",
+                    "School of Integrative Medicine", "School of Law", "School of Liberal Arts", "School of Management", "School of Medicine", "School of Science", "School of Social Innovation"],
+
+                master: ["School of Agro-Industry", "School of Anti-Aging and Regenerative Medicine", "School of Cosmetic Science", "School of Health Science", "School of Information Technology",
+                    "School of Law", "School of Liberal Arts", "School of Management", "School of Science", "School of Sinology", "School of Social Innovation"],
+
+                doctoral: ["School of Agro-Industry", "School of Anti-Aging and Regenerative Medicine", "School of Cosmetic Science", "School of Health Science", "School of Information Technology",
+                    "School of Liberal Arts", "School of Management", "School of Science"],
+
+                certificate: ["School of Dentistry", "School of Nursing"],
+
+                all: ["School of Agro-Industry", "School of Anti-Aging and Regenerative Medicine", "School of Cosmetic Science", "School of Dentistry", "School of Health Science", "School of Information Technology",
+                    "School of Integrative Medicine", "School of Law", "School of Liberal Arts", "School of Management", "School of Medicine", "School of Nursing", "School of Science", "School of Sinology", "School of Social Innovation"]
+            };
+
+            const dropdown3Data = {
+                "School of Agro-Industry": ["Innovative Food Science and Technology", "Postharvest Technology and Logistics", "Dual Bachelor's Degree Programmes", "Postharvest Technology and Innovation", "Innovative Food Science and Technology"],
+                "School of Anti-Aging and Regenerative Medicine": ["Anti-Aging and Regenerative Medicine", "Anti-Aging and Regenerative Science", "Dermatology"],
+                "School of Cosmetic Science": ["Beauty Technology", "Cosmetic Science", "Creative Innovation in Cosmetic Science"],
+                "School of Dentistry": ["Dental Assistant", "Dental Surgery"],
+                "School of Health Science": ["Environmental Health", "Occupational Health and Safety", "Public Health", "Sports and Health Science", "Border Health Management", "Health and Biomedical Analytics"],
+                "School of Information Technology": ["Computer Engineering", "Digital and Communication Engineering", "Digital Technology for Business Innovation", "Multimedia Technology and Animation", "Software Engineering", "Computer Science and Innovation", "Digital Transformation Technology"],
+                "School of Integrative Medicine": ["Applied Thai Traditional Medicine", "Physical Therapy", "Traditional Chinese Medicine"],
+                "School of Law": ["Laws", "Business Law and Chinese Communication"],
+                "School of Liberal Arts": ["English", "Thai Language and Culture for Foreigners", "English for Professional Development"],
+                "School of Management": ["Accounting", "Business Management", "Economics", "Business Administration", "International Logistics and Supply Chain Management"],
+                "School of Medicine": ["Medicine"],
+                "School of Nursing": ["Practical Nursing", "Nursing Science"],
+                "School of Science": ["Applied Chemistry", "Biotechnology (Biological Science)", "Materials Engineering", "Biological Science", "Computational and Data Science", "Materials Innovation for Sustainability"],
+                "School of Sinology": ["Business Chinese", "Chinese Language and Culture", "Chinese Studies", "Teaching Chinese Language"],
+                "School of Social Innovation": ["International Development"],
+
+                all: ["Innovative Food Science and Technology", "Postharvest Technology and Logistics", "Dual Bachelor's Degree Programmes", "Postharvest Technology and Innovation",
+                    "Anti-Aging and Regenerative Medicine", "Anti-Aging and Regenerative Science", "Dermatology",
+                    "Beauty Technology", "Cosmetic Science", "Creative Innovation in Cosmetic Science", "Dental Assistant",
+                    "Environmental Health", "Occupational Health and Safety", "Public Health", "Sports and Health Science", "Border Health Management", "Health and Biomedical Analytics",
+                    "Computer Engineering", "Digital and Communication Engineering", "Digital Technology for Business Innovation", "Multimedia Technology and Animation", "Software Engineering", "Computer Science and Innovation", "Digital Transformation Technology",
+                    "Applied Thai Traditional Medicine", "Physical Therapy", "Traditional Chinese Medicine", "Laws", "Business Law and Chinese Communication", "English", "Thai Language and Culture for Foreigners", "English for Professional Development",
+                    "Accounting", "Business Management", "Economics", "Business Administration", "International Logistics and Supply Chain Management", "Medicine", "Practical Nursing", "Nursing Science",
+                    "Applied Chemistry", "Biotechnology (Biological Science)", "Materials Engineering", "Biological Science", "Computational and Data Science", "Materials Innovation for Sustainability",
+                    "Business Chinese", "Chinese Language and Culture", "Chinese Studies", "Teaching Chinese Language", "International Development"]
+            };
+
+            function filterDropdown2() {
+                const degree = document.getElementById('degree');
+                const school = document.getElementById('school');
+                const selectedValue = degree.value;
+
+                school.innerHTML = '<option value="">Select an option</option>';
+                const options = selectedValue ? dropdown2Data[selectedValue] : dropdown2Data['all'];
+                options.forEach(option => {
+                    const newOption = document.createElement('option');
+                    newOption.value = option;
+                    newOption.textContent = option;
+                    school.appendChild(newOption);
+                });
+
+                // Reset dropdown3
+                filterDropdown3();
+            }
+
+            function filterDropdown3() {
+                const school = document.getElementById('school');
+                const major = document.getElementById('major');
+                const selectedValue = school.value;
+
+                major.innerHTML = '<option value="">Select an option</option>';
+                const options = selectedValue ? dropdown3Data[selectedValue] : dropdown3Data['all'];
+                options.forEach(option => {
+                    const newOption = document.createElement('option');
+                    newOption.value = option;
+                    newOption.textContent = option;
+                    major.appendChild(newOption);
+                });
+            }
+
+            // Initialize dropdowns with default data
+            filterDropdown2();
+            filterDropdown3();
+        </script>
+</body>
+
+</html>

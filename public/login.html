@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #7d2923;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-11">
+                <div class="custom-container2">
+                    <div class="header">
+                        <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" class="logo">
+                        <h2 style="color: white; text-align: center;">Register for Graduation</h2>
+                    </div>
+                    <form id="loginForm" action="/auth/login" method="POST">
+                        <input type="text" class="form-control" placeholder="Student ID" aria-label="StudentID" name="studentID" id="studentID" required>
+                        <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password" id="password" required>
+                        <button type="submit" class="btn btn-success">Login</button>
+                    </form>
+                    <div class="mt-1">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='/register'">Sign up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for error messages -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalErrorMessage">
+                    <!-- Error message will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const studentID = document.getElementById('studentID').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ studentID, password })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 200) {
+                    window.location.href = '/home';
+                } else {
+                    // Display error message in the modal
+                    document.getElementById('modalErrorMessage').textContent = data.message;
+                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                    errorModal.show();
+                }
+            } catch (error) {
+                // Display a general error message in the modal
+                document.getElementById('modalErrorMessage').textContent = 'An error occurred. Please try again.';
+                const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+            }
+        });
+    </script>
+</body>
+</html>

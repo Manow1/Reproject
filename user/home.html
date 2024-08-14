@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/public/css/home.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="d-flex align-items-center">
+            <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" class="logo">
+            <div class="university-name ms-3">
+                <h1 id="univ-name-en">MAE FAH LUANG UNIVERSITY</h1>
+                <h2 id="univ-name-th">มหาวิทยาลัยแม่ฟ้าหลวง</h2>
+            </div>
+        </div>
+        <div class="language-switch">
+            <a id="en-link">EN</a> | <a id="th-link">TH</a>
+        </div>
+    </header>
+test
+    </header>
+
+    <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" onclick="toggleNavbar()">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="home.html">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="gra-Inv.html">Graduation Invitation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">personal information</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="dashboard-box">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+                <div class="content-container" style="padding-left: 20px;">
+                    <h3>Announcements and News</h3>
+                    <div class="announcement">
+                        <h5>Announcement Title 1</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    </div>
+                    <div class="announcement">
+                        <h5>Announcement Title 2</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    </div>
+                    <div class="announcement">
+                        <h5>Announcement Title 3</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <script>
+        function toggleNavbar() {
+            const navbar = document.querySelector('.navbar-collapse');
+            const sidebar = document.querySelector('.sidebar');
+            const navbarButton = document.querySelector('.navbar-toggler');
+            navbar.classList.toggle('show');
+            sidebar.classList.toggle('active');
+            // เปลี่ยนไอคอนของปุ่ม Navbar เมื่อเปิด/ปิด Navbar
+            if (navbar.classList.contains('show')) {
+                navbarButton.innerHTML = '<span class="navbar-toggler-icon"></span> Close';
+            } else {
+                navbarButton.innerHTML = '<span class="navbar-toggler-icon"></span>';
+            }
+        }
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        document.getElementById('en-link').addEventListener('click', function () {
+            document.getElementById('univ-name-en').style.display = 'block';
+            document.getElementById('univ-name-th').style.display = 'none';
+        });
+
+        document.getElementById('th-link').addEventListener('click', function () {
+            document.getElementById('univ-name-en').style.display = 'none';
+            document.getElementById('univ-name-th').style.display = 'block';
+        });
+
+        // Default language setting
+        document.getElementById('univ-name-th').style.display = 'none';
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <style>
+        body {
+            background-color: #7d2923;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-11">
+                <div class="custom-container">
+                    <div class="header">
+                        <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" class="logo">
+                        <h2>Register for Graduation</h2>
+                    </div>
+                    <form action="/register" method="POST">
+                        <p>Sign up</p>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Student ID" name="studentID" id="studentID" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Email" name="email" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" placeholder="Password" name="password" id="password"
+                                id="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" placeholder="Confirm Password"
+                                id="confirmPassword" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn btn-secondary">Register</button>
+                        </div>
+                    </form>
+                </div>Graduation Invitation
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match.');
+            }
+        });
+    </script>
+</body>
+
+</html>

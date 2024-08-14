@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/public/css/home.css">
+    <style>
+        .dashboard-box {
+            background-color: #F7F0D1;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .img {
+            width: 250px;
+            height: auto;
+            display: grid;
+            place-items: center;
+
+        }
+
+        .flex-item,
+        .grid-item {
+            text-align: right;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 12px 35px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 0 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="d-flex align-items-center">
+            <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" class="logo">
+            <div class="university-name ms-3">
+                <h1 id="univ-name-en">MAE FAH LUANG UNIVERSITY</h1>
+                <h2 id="univ-name-th">มหาวิทยาลัยแม่ฟ้าหลวง</h2>
+            </div>
+        </div>
+        <div class="language-switch">
+            <a id="en-link">EN</a> | <a id="th-link">TH</a>
+        </div>
+    </header>
+
+    <div class=" mx-5 my-3">
+        <h1>Personal Information</h1>
+    </div>
+
+    <div class="dashboard-box mx-5">
+        <div class="row">
+            <div class="img col-md-6 ">
+                <img src="/public/image/คน.webp" alt="รูปภาพ" class="img-thumbnail">
+
+            </div>
+            <div class="col-md-6">
+                <p>6431501xxx : <span class="text-danger">student name</span></p>
+                <hr>
+                <p>Telephone Number <span class="text-danger">xxxx</span></p>
+                <p>MFU Mail <span class="text-danger">xxx</span></p>
+                <p>School <span class="text-danger">xxx</span></p>
+                <p>Major <span class="text-danger">xxx</span></p>
+                <p>Degree <span class="text-danger">xxx</span></p><br>
+                <p>status check in: <span class="text-danger">---</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="buttons">
+        <a href="home.html" class="button btn btn-secondary" id="homeButton">Home</a>
+        <a href="..." class="button btn btn-danger" id="editButton">Edit</a>
+    </div>
+</body>
+
+</html>

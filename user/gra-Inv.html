@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graduation Invitation</title>
+  <style>
+    /* General styling */
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Container for the main content */
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      color: #333;
+    }
+
+    /* Question */
+    .question {
+      font-size: 18px;
+      color: #666;
+    }
+
+    /* Buttons */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .button {
+      background-color: #4CAF50;
+      /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 0 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+      /* Darker green on hover */
+    }
+
+    .button.cancel {
+      background-color: #dc3545;
+      /* Red */
+    }
+
+    .button.cancel:hover {
+      background-color: #c82333;
+      /* Darker red on hover */
+    }
+
+    /* Confirmation button */
+    .confirm-button {
+      background-color: #007bff;
+      /* Blue */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .confirm-button:hover {
+      background-color: #0056b3;
+      /* Darker blue on hover */
+    }
+
+    /* Back button */
+    .back-button {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-button:hover {
+      background-color: #555;
+    }
+
+    /* Custom Popup */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      text-align: center;
+      display: none;
+      /* Initially hidden */
+    }
+
+    .popup p {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .popup button {
+      background-color: #0056b3;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .popup button:hover {
+      background-color: #0056b3;
+      /* Darker blue on hover */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>คุณจะเข้าร่วมงานรับปริญญาไหม</h1>
+      <div class="question">
+        กรุณายืนยันการเข้าร่วมงานรับปริญญาของคุณ
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="button" id="confirmButton">เข้าร่วม</button>
+      <button class="button cancel" id="cancelButton">ไม่เข้าร่วม</button>
+    </div>
+    <a href="home.html" class="back-button">Back to Home</a>
+  </div>
+
+  <!-- Custom Popup -->
+  <div class="popup" id="cancelConfirmationPopup">
+    <p>คุณแน่ใจว่าต้องการยกเลิกการเข้าร่วม?</p>
+    <button id="cancelYesButton">ใช่</button>
+    <button id="cancelNoButton">ไม่</button>
+  </div>
+
+  <script>
+    document.getElementById("confirmButton").addEventListener("click", function () {
+      // Create a custom confirmation dialog
+      var confirmDialog = document.createElement("div");
+      confirmDialog.style.position = "fixed";
+      confirmDialog.style.top = "0";
+      confirmDialog.style.left = "0";
+      confirmDialog.style.width = "100%";
+      confirmDialog.style.height = "100%";
+      confirmDialog.style.backgroundColor = "rgba(0,0,0,0.5)";
+      confirmDialog.style.display = "flex";
+      confirmDialog.style.justifyContent = "center";
+      confirmDialog.style.alignItems = "center";
+      confirmDialog.style.zIndex = "1000";
+
+      var confirmBox = document.createElement("div");
+      confirmBox.style.backgroundColor = "white";
+      confirmBox.style.padding = "20px";
+      confirmBox.style.borderRadius = "10px";
+      confirmBox.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
+      confirmBox.style.textAlign = "center";
+
+      var message = document.createElement("p");
+      message.textContent = "คุณแน่ใจหรือไม่ที่จะยืนยันการเข้าร่วม?";
+      confirmBox.appendChild(message);
+
+      var yesButton = document.createElement("button");
+      yesButton.textContent = "ใช่";
+      yesButton.style.backgroundColor = "green";
+      yesButton.style.color = "white";
+      yesButton.style.border = "none";
+      yesButton.style.padding = "10px 20px";
+      yesButton.style.borderRadius = "5px";
+      yesButton.style.cursor = "pointer";
+      yesButton.style.marginRight = "10px";
+      yesButton.addEventListener("click", function () {
+        document.body.removeChild(confirmDialog);
+        alert("คุณได้ทำการยืนยันแล้ว!");
+        // Perform further actions if confirmed
+      });
+      confirmBox.appendChild(yesButton);
+
+      var noButton = document.createElement("button");
+      noButton.textContent = "ไม่";
+      noButton.style.backgroundColor = "red";
+      noButton.style.color = "white";
+      noButton.style.border = "none";
+      noButton.style.padding = "10px 20px";
+      noButton.style.borderRadius = "5px";
+      noButton.style.cursor = "pointer";
+      noButton.addEventListener("click", function () {
+        document.body.removeChild(confirmDialog);
+      });
+      confirmBox.appendChild(noButton);
+
+      confirmDialog.appendChild(confirmBox);
+      document.body.appendChild(confirmDialog);
+    });
+
+    document.getElementById("cancelButton").addEventListener("click", function () {
+      document.getElementById("cancelConfirmationPopup").style.display = "block";
+    });
+
+    document.getElementById("cancelYesButton").addEventListener("click", function () {
+      document.getElementById("cancelConfirmationPopup").style.display = "none";
+      alert("คุณได้ยกเลิกการเข้าร่วมแล้ว!");
+      window.location.href = "home.html"; // Redirect to home page
+    });
+
+    document.getElementById("cancelNoButton").addEventListener("click", function () {
+      document.getElementById("cancelConfirmationPopup").style.display = "none";
+    });
+  </script>
+</body>
+
+</html>
