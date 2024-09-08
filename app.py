@@ -5,6 +5,7 @@ import os
 import pymongo
 app = Flask(__name__)
 
+
 # Connect to MongoDB
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 print(client.server_info())

@@ -146,16 +146,20 @@ const canvas = require('canvas');
 require('dotenv').config();
 
 // Load face-api.js models
-const MODEL_URL = path.join(__dirname, 'models');
-Promise.all([
-    faceapi.nets.tinyFaceDetector.loadFromDisk(MODEL_URL),
-    faceapi.nets.faceLandmark68Net.loadFromDisk(MODEL_URL),
-    faceapi.nets.faceRecognitionNet.loadFromDisk(MODEL_URL)
-]);
+// const MODEL_URL = path.join(__dirname, 'models');
+// Promise.all([
+//     faceapi.nets.tinyFaceDetector.loadFromDisk(MODEL_URL),
+//     faceapi.nets.faceLandmark68Net.loadFromDisk(MODEL_URL),
+//     faceapi.nets.faceRecognitionNet.loadFromDisk(MODEL_URL)
+// ]);
 
 const app = express();
-const port = process.env.PORT || 5000;
 const authRoutes = require('./routes/auth');
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 // Middleware
 app.use(cors());
