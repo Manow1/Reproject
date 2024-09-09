@@ -184,7 +184,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 const authRoutes = require('./routes/auth');
 
 // Middleware
@@ -212,6 +212,7 @@ const authenticate = (req, res, next) => {
         req.user = user;
         next();
     });
+
 };
 
 const { Canvas, Image, ImageData } = canvas;
@@ -305,3 +306,4 @@ app.get('/api/user', authenticate, async (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+
