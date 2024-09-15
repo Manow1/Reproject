@@ -8,68 +8,137 @@
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/public/css/home.css">
+    <style>
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .dashboard-box {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+
+        }
+
+        .language-switch a {
+            color: white;
+            text-decoration: none;
+
+        }
+
+        .language-switch a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
     <header class="header">
-        <div class="d-flex align-items-center">
-            <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" class="logo">
-            <div class="university-name ms-3">
-                <h1 id="univ-name-en">MAE FAH LUANG UNIVERSITY</h1>
-                <h2 id="univ-name-th">มหาวิทยาลัยแม่ฟ้าหลวง</h2>
-            </div>
-        </div>
-        <div class="language-switch">
-            <a id="en-link">EN</a> | <a id="th-link">TH</a>
-        </div>
-    </header>
-test
-    </header>
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" style="width: 50px; height: auto;">
+                    <span class="navbar-text">MAE FAH LUANG UNIVERSITY</span>
+                </a>
 
-    <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" onclick="toggleNavbar()">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="home.html">Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="gra-Inv.html">Graduation Invitation</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">personal information</a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div class="dashboard-box">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                    <h1 class="h2">Dashboard</h1>
-                </div>
-                <div class="content-container" style="padding-left: 20px;">
-                    <h3>Announcements and News</h3>
-                    <div class="announcement">
-                        <h5>Announcement Title 1</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    </div>
-                    <div class="announcement">
-                        <h5>Announcement Title 2</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    </div>
-                    <div class="announcement">
-                        <h5>Announcement Title 3</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    </div>
+                <div class="language-switch ">
+                    <a id="en-link " href="#">EN</a> | <a id="th-link" href="#">TH</a>
                 </div>
             </div>
+        </nav>
+    </header>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container container-fluid ">
+            <button class="navbar-toggler" type="button" onclick="toggleNavbar()">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="gra-Inv.html">Graduation Invitation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="showInformstion.html">Personal Information</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 ms-3">
+        <h1 class="h2 container">Dashboard</h1>
     </div>
+
+
+    <div class="container">
+        <div class="dashboard-box">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="content-container" style="padding-left: 20px;">
+                        <h3>Announcements and News</h3>
+                        <div class="announcement">
+                            <h5>Announcement Title 1</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        </div>
+                        <div class="announcement">
+                            <h5>Announcement Title 2</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        </div>
+                        <div class="announcement">
+                            <h5>Announcement Title 3</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script>
+        async function loadHeader() {
+            try {
+                const response = await fetch('/header.html');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const headerHTML = await response.text();
+                document.getElementById('header-placeholder').innerHTML = headerHTML;
+
+                // Add the logout button event listener here after the header is loaded
+                document.getElementById('logoutButton').addEventListener('click', async function () {
+                    try {
+                        const response = await fetch('/auth/logout', { method: 'GET' });
+                        if (response.ok) {
+                            window.location.href = '/login'; // Redirect to the login page upon successful logout
+                        } else {
+                            console.error('Error logging out:', await response.text());
+                        }
+                    } catch (error) {
+                        console.error('Error logging out:', error);
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading header:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadHeader);
         function toggleNavbar() {
             const navbar = document.querySelector('.navbar-collapse');
             const sidebar = document.querySelector('.sidebar');

@@ -4,27 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Information</title>
+    <title>Home</title>
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/public/css/home.css">
+
     <style>
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
         .dashboard-box {
-            background-color: #F7F0D1;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
-        .img {
+        .img-container {
             width: 250px;
-            height: auto;
-            display: grid;
-            place-items: center;
-
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            overflow: hidden;
         }
 
-        .flex-item,
-        .grid-item {
-            text-align: right;
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .buttons {
@@ -41,50 +50,174 @@
             font-size: 16px;
             margin: 0 20px;
         }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+            
+        }
+
+        .language-switch a {
+            color: white;
+            text-decoration: none;
+            
+        }
+
+        .language-switch a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
 <body>
-
     <header class="header">
-        <div class="d-flex align-items-center">
-            <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" class="logo">
-            <div class="university-name ms-3">
-                <h1 id="univ-name-en">MAE FAH LUANG UNIVERSITY</h1>
-                <h2 id="univ-name-th">มหาวิทยาลัยแม่ฟ้าหลวง</h2>
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" style="width: 50px; height: auto;">
+                    <span class="navbar-text">MAE FAH LUANG UNIVERSITY</span>
+                </a>
+                
+                <div class="language-switch ">
+                    <a id="en-link " href="#">EN</a> | <a id="th-link" href="#">TH</a>
+                </div>
             </div>
-        </div>
-        <div class="language-switch">
-            <a id="en-link">EN</a> | <a id="th-link">TH</a>
-        </div>
+        </nav>
     </header>
 
-    <div class=" mx-5 my-3">
-        <h1>Personal Information</h1>
-    </div>
 
-    <div class="dashboard-box mx-5">
-        <div class="row">
-            <div class="img col-md-6 ">
-                <img src="/public/image/คน.webp" alt="รูปภาพ" class="img-thumbnail">
+    <div class="container">
+        <h1 class="my-4">Personal Information</h1>
 
-            </div>
-            <div class="col-md-6">
-                <p>6431501xxx : <span class="text-danger">student name</span></p>
-                <hr>
-                <p>Telephone Number <span class="text-danger">xxxx</span></p>
-                <p>MFU Mail <span class="text-danger">xxx</span></p>
-                <p>School <span class="text-danger">xxx</span></p>
-                <p>Major <span class="text-danger">xxx</span></p>
-                <p>Degree <span class="text-danger">xxx</span></p><br>
-                <p>status check in: <span class="text-danger">---</span></p>
+        <div class="dashboard-box">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="img-container mb-3">
+                        <img id="userImage" alt="User Profile Picture" class="img-fluid">
+                    </div>
+                    <div class="text-center">
+                        <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                        <button class="btn btn-primary" onclick="document.getElementById('imageUpload').click();">Choose
+                            Image</button>
+                    </div>
+                </div>
+                <div class="col-md-6" id="userProfile">
+                    <p><span id="studentId"></span> <span id="name" class="text-danger"></span></p>
+                    <hr>
+                    <p>Telephone Number: <span id="telephone" class="text-danger"></span></p>
+                    <p>MFU Mail: <span id="email" class="text-danger"></span></p>
+                    <p>School: <span id="school" class="text-danger"></span></p>
+                    <p>Major: <span id="major" class="text-danger"></span></p>
+                    <p>Degree: <span id="degree" class="text-danger"></span></p>
+                    <p>Status check in: <span id="checkInStatus" class="text-danger"></span></p>
+                </div>
             </div>
         </div>
+
+        <div class="buttons">
+            <a href="home.html" class="button btn btn-success" id="homeButton">Home</a>
+            <a href="input.html" class="button btn btn-danger" id="editButton">Edit</a>
+        </div>
     </div>
-    <div class="buttons">
-        <a href="home.html" class="button btn btn-secondary" id="homeButton">Home</a>
-        <a href="..." class="button btn btn-danger" id="editButton">Edit</a>
-    </div>
+
+    <script>
+        async function loadHeader() {
+            try {
+                const response = await fetch('/header.html');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const headerHTML = await response.text();
+                document.getElementById('header-placeholder').innerHTML = headerHTML;
+
+                // Add the logout button event listener here after the header is loaded
+                document.getElementById('logoutButton').addEventListener('click', async function () {
+                    try {
+                        const response = await fetch('/auth/logout', { method: 'GET' });
+                        if (response.ok) {
+                            window.location.href = '/login'; // Redirect to the login page upon successful logout
+                        } else {
+                            console.error('Error logging out:', await response.text());
+                        }
+                    } catch (error) {
+                        console.error('Error logging out:', error);
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading header:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadHeader);
+        document.getElementById('imageUpload').addEventListener('change', function (event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('userImage').src = e.target.result;
+                uploadImage(file);
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function uploadImage(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+
+            fetch('/api/upload-image', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Image uploaded successfully:', data);
+                    // You might want to refresh the user profile here
+                    fetchUserProfile();
+                })
+                .catch(error => {
+                    console.error('Error uploading image:', error);
+                });
+        }
+
+        function fetchUserProfile() {
+            fetch('/api/user-profile')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('studentId').textContent = data.studentId;
+                    document.getElementById('name').textContent = data.name;
+                    document.getElementById('telephone').textContent = data.telephone;
+                    document.getElementById('email').textContent = data.email;
+                    document.getElementById('school').textContent = data.school;
+                    document.getElementById('major').textContent = data.major;
+                    document.getElementById('degree').textContent = data.degree;
+                    document.getElementById('checkInStatus').textContent = data.checkInStatus;
+
+                    // Set the user's profile image
+                    if (data.imageUrl) {
+                        document.getElementById('userImage').src = data.imageUrl;
+                    } else {
+                        // Set a default image if no image URL is provided
+                        document.getElementById('userImage').src = '/public/image/default-profile.png';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching user profile:', error);
+                    // Handle the error, e.g., show an error message to the user
+                });
+        }
+
+        // Call the function when the page loads
+        document.addEventListener('DOMContentLoaded', fetchUserProfile);
+    </script>
 </body>
 
 </html>

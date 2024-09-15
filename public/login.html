@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,26 +10,36 @@
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-            background-color: #7d2923;
+            background-image: url(/public/image/mfu.jpg);
+            background-size: 100% 100%;
+            background-position: center;
+        }
+
+        .box {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-11">
-                <div class="custom-container2">
+                <div class="custom-container box">
                     <div class="header">
                         <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" class="logo">
-                        <h2 style="color: white; text-align: center;">Register for Graduation</h2>
+                        <h2 text-align: center;">Register for Graduation</h2>
                     </div>
                     <form id="loginForm" action="/auth/login" method="POST">
-                        <input type="text" class="form-control" placeholder="Student ID" aria-label="StudentID" name="studentID" id="studentID" required>
-                        <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password" id="password" required>
+                        <input type="text" class="form-control" placeholder="Student ID" aria-label="StudentID"
+                            name="studentID" id="studentID" required>
+                        <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                            name="password" id="password" required>
                         <button type="submit" class="btn btn-success">Login</button>
                     </form>
                     <div class="mt-1">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='/register'">Sign up</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="window.location.href='/user/register.html'">Sign up</button>
                     </div>
                 </div>
             </div>
@@ -87,4 +98,5 @@
         });
     </script>
 </body>
+
 </html>

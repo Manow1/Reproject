@@ -14,6 +14,24 @@
             margin: 0 auto;
         }
 
+        .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+
+        }
+
+        .language-switch a {
+            color: white;
+            text-decoration: none;
+
+        }
+
+        .language-switch a:hover {
+            text-decoration: underline;
+        }
+
         img {
             max-width: 100%;
             height: auto;
@@ -87,6 +105,21 @@
             cursor: pointer;
         }
 
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 12px 35px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 0 20px;
+        }
+
         footer {
             background-color: #f0f0f0;
             padding: 20px 0;
@@ -97,16 +130,18 @@
 
 <body>
     <header class="header">
-        <div class="d-flex align-items-center">
-            <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" class="logo">
-            <div class="university-name ms-3">
-                <h1 id="univ-name-en">MAE FAH LUANG UNIVERSITY</h1>
-                <h2 id="univ-name-th">มหาวิทยาลัยแม่ฟ้าหลวง</h2>
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="/public/image/logo-mfu-v22.png" alt="logo-mfu" style="width: 50px; height: auto;">
+                    <span class="navbar-text">MAE FAH LUANG UNIVERSITY</span>
+                </a>
+
+                <div class="language-switch ">
+                    <a id="en-link " href="#">EN</a> | <a id="th-link" href="#">TH</a>
+                </div>
             </div>
-        </div>
-        <div class="language-switch">
-            <a id="en-link">EN</a> | <a id="th-link">TH</a>
-        </div>
+        </nav>
     </header>
 
     <main>
@@ -176,9 +211,39 @@
                     </div>
                 </div>
 
+                <div class="buttons">
+                    <a href="home.html" class="button btn btn-success" id="homeButton">Sumbit</a>
+                    <a href="input.html" class="button btn btn-danger" id="editButton">Cancel</a>
+                </div>
         </div>
 
         <script>
+            async function loadHeader() {
+                try {
+                    const response = await fetch('/header.html');
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const headerHTML = await response.text();
+                    document.getElementById('header-placeholder').innerHTML = headerHTML;
+
+                    // Add the logout button event listener here after the header is loaded
+                    document.getElementById('logoutButton').addEventListener('click', async function () {
+                        try {
+                            const response = await fetch('/auth/logout', { method: 'GET' });
+                            if (response.ok) {
+                                window.location.href = '/login'; // Redirect to the login page upon successful logout
+                            } else {
+                                console.error('Error logging out:', await response.text());
+                            }
+                        } catch (error) {
+                            console.error('Error logging out:', error);
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error loading header:', error);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', loadHeader);
             const fileInput = document.getElementById('fileInput');
             const previewImage = document.getElementById('previewImage');
 
